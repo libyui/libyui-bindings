@@ -7,7 +7,7 @@ PREFIX = /usr
 configure: 
 	mkdir build ;\
 	cd build ;\
-	cmake -DCMAKE_INSTALL_PREFIX=$(PREFIX)
+	cmake -DCMAKE_INSTALL_PREFIX=$(PREFIX) ..
 
 install: configure
 	cd build; \
