@@ -2,14 +2,12 @@
 # Makefile.cvs
 #
 
-LIB = $(shell y2tool get-lib)
-
 PREFIX = /usr
 
 configure: 
 	mkdir build ;\
 	cd build ;\
-	cmake -DCMAKE_INSTALL_PREFIX=$(PREFIX) -DLIB=$(LIB) ..
+	cmake -DCMAKE_INSTALL_PREFIX=$(PREFIX)
 
 install: configure
 	cd build; \
