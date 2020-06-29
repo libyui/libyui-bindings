@@ -57,7 +57,8 @@ class mainGui():
         dlg.setButtonLabel("Yes", yui.YMGAMessageBox.B_ONE)
         dlg.setButtonLabel("No",  yui.YMGAMessageBox.B_TWO)
         dlg.setMinSize(50, 5);
-        return dlg.show() == yui.YMGAMessageBox.B_ONE
+        ret_val = dlg.show() == yui.YMGAMessageBox.B_ONE
+        return ret_val
 
     def aboutDialog(self):
         yui.YUI.widgetFactory;
@@ -74,15 +75,18 @@ class mainGui():
         while True:
             event = self.dialog.waitForEvent()
             if event.eventType() == yui.YEvent.CancelEvent:
-                self.dialog.destroy()
                 break
             if event.widget() == self.closebutton:
-                info = Info("Quit confirmation", 1, "Are you sure you want to quit?")
+                info = Info("Quit confirmation", True, "Are you sure you want to quit?")
                 if self.ask_YesOrNo(info):
-                    self.dialog.destroy()
                     break
             if event.widget() == self.aboutbutton:
                 self.aboutDialog()
+
+        yui.YDialog.deleteAllDialogs()
+        # next line seems to be a workaround to prevent the qt-app from crashing
+        # see https://github.com/libyui/libyui-qt/issues/41
+        yui.YUILoader.deleteUI()
 
 if __name__ == "__main__":
     main_gui = mainGui()
