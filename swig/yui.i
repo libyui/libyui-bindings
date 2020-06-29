@@ -103,6 +103,8 @@ SWIGEXPORT void Init__yui(void) {
 #include "yui/mga/YMGA_CBTable.h"
 #include "yui/mga/YMGAMsgBox.h"
 #include "yui/mga/YMGAAboutDialog.h"
+#include "yui/mga/YMGAMenuItem.h"
+#include "yui/mga/YMGAMenuBar.h"
 #include "yui/mga/YMGAWidgetExtensionFactory.h"
 #endif
 
@@ -265,6 +267,8 @@ class Exception;
 #if defined(WITH_MGA)
 %include yui/mga/YMGA_CBTable.h
 %include yui/mga/YMGAAboutDialog.h
+%include yui/mga/YMGAMenuItem.h
+%include yui/mga/YMGAMenuBar.h
 %include yui/mga/YMGAMsgBox.h
 %include yui/mga/YMGAWidgetExtensionFactory.h
 #endif
