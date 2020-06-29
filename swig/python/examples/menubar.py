@@ -45,6 +45,7 @@ class mainGui():
         mainvbox = self.factory.createVBox(self.dialog)
         self.menubar = self.mgafactory.createMenuBar(mainvbox)
 
+        #Items must be "disowned"
         mItem = yui.YMGAMenuItem("&File")
         mItem.this.own(False)
         tmi = yui.YMGAMenuItem(mItem, "&New")
@@ -70,25 +71,29 @@ class mainGui():
 
         self.menubar.addItem(mItem)
 
-        #mItem1 = yui.YMGAMenuItem("&Edit")
-        #yui.YMGAMenuItem(mItem1, "&Undo", "edit-undo.png")
-        #yui.YMGAMenuItem(mItem1, "&Redo", "edit-redo.png")
-        #yui.YMenuSeparator(mItem1);
-        #yui.YMGAMenuItem(mItem1, "Cu&t", "edit-cut.png")
-        #yui.YMGAMenuItem(mItem1, "&Copy", "edit-copy.png")
-        #yui.YMGAMenuItem(mItem1, "&Paste", "edit-paste.png")
-        #mItem1.this.own(False)
-        #self.menubar.addItem(mItem1)
+        mItem1 = yui.YMGAMenuItem("&Edit")
+        self.editMenu = {
+            'menu'      : mItem1,
+            'undo'      : yui.YMGAMenuItem(mItem1, "&Undo", "edit-undo.png"),
+            'redo'      : yui.YMGAMenuItem(mItem1, "&Redo", "edit-redo.png"),
+            'sep0'      : yui.YMenuSeparator(mItem1),
+            'cut'       : yui.YMGAMenuItem(mItem1, "Cu&t", "edit-cut.png"),
+            'copy'      : yui.YMGAMenuItem(mItem1, "&Copy", "edit-copy.png"),
+            'paste'     : yui.YMGAMenuItem(mItem1, "&Paste", "edit-paste.png"),
+        }
+        #Items must be "disowned"
+        for k in self.editMenu.keys():
+            self.editMenu[k].this.own(False)
+        self.menubar.addItem(self.editMenu['menu'])
 
-        frame    = self.factory.createFrame(mainvbox,"Test frame")
-        HBox     = self.factory.createHBox(frame)
+        HBox     = self.factory.createHBox(mainvbox)
         self.aboutbutton = self.factory.createPushButton(HBox,"&About")
         self.closebutton = self.factory.createPushButton(self.factory.createRight(HBox), "&Close")
 
 
     def aboutDialog(self):
-        dlg = self.mgafactory.createAboutDialog("About dialog title example", "1.0.0", "GPLv3",
-                                        "Angelo Naselli", "This beautiful test example shows how it is easy to play with libyui bindings", "")
+        dlg = self.mgafactory.createAboutDialog("About menu bar example", "1.0.0", "GPLv3",
+                                        "Angelo Naselli", "This simple example shows how a menubar can work using libyui bindings", "")
         dlg.show();
 
 
@@ -102,7 +107,10 @@ class mainGui():
             if eventType == yui.YEvent.CancelEvent:
                 break
             elif (eventType == yui.YEvent.MenuEvent) :
-                pass
+                item = event.item()
+                if (item) :
+                    if  item == self.quitMenu :
+                        break
             elif (eventType == yui.YEvent.WidgetEvent) :
                 # widget selected
                 widget  = event.widget()
